@@ -3,8 +3,21 @@ from config import HF_API_URL, HUGGING_FACE_TOKEN
 
 class AI_HF:
 
+    API_URL = HF_API_URL
+    HUGGING_FACE_TOKEN = HUGGING_FACE_TOKEN
+
     @staticmethod
     def example(text, level):
+        """Generate an English example sentence for a given word and CEFR level.
+
+        Args:
+            text (str): The target English word.
+            level (str): CEFR level (A1–C2).
+
+        Returns:
+            str | None: Generated example sentence, or None if request failed.
+        """
+
         headers = {'Authorization': f'Bearer {AI_HF.HUGGING_FACE_TOKEN}'}
         main_prompt = f"""
 Ты — нейромодель, создающая одно корректное примерное предложение на английском языке 
@@ -61,7 +74,7 @@ class AI_HF:
             'model': 'deepseek-ai/DeepSeek-V3-0324'
         }
         try:
-            response = requests.post(AI_HF.HF_API_URL, headers=headers, json=payload, timeout=20)
+            response = requests.post(AI_HF.API_URL, headers=headers, json=payload, timeout=20)
 
             data = response.json()
             if 'choices' in data and len(data['choices']) > 0:
@@ -73,6 +86,15 @@ class AI_HF:
 
     @staticmethod
     def corect_word(word):
+        """Correct spelling mistakes in a given word or short phrase.
+
+        Args:
+            word (str): User-provided word or phrase.
+
+        Returns:
+            str: Corrected version of the input word or the original if uncertain.
+        """
+
         headers = {'Authorization': f'Bearer {AI_HF.HUGGING_FACE_TOKEN}'}
         main_prompt = f"""
 Ты — нейромодель, которая исправляет только орфографические ошибки и опечатки 
@@ -118,7 +140,7 @@ class AI_HF:
             'model': 'deepseek-ai/DeepSeek-V3-0324'
         }
         try:
-            response = requests.post(AI_HF.HF_API_URL, headers=headers, json=payload, timeout=20)
+            response = requests.post(AI_HF.API_URL, headers=headers, json=payload, timeout=20)
 
             data = response.json()
             if 'choices' in data and len(data['choices']) > 0:
@@ -131,6 +153,15 @@ class AI_HF:
 
     @staticmethod
     def estimate_level(user_dict):
+        """Estimate a user's English proficiency level from their vocabulary list.
+
+        Args:
+            user_dict (str): String representation of the user's word pairs.
+
+        Returns:
+            str: Estimated CEFR level (A1–C2).
+        """
+
         headers = {'Authorization': f'Bearer {AI_HF.HUGGING_FACE_TOKEN}'}
         main_prompt = f"""
 Ты — модель, оценивающая примерный уровень владения английским языком пользователя
@@ -179,7 +210,7 @@ class AI_HF:
             'model': 'deepseek-ai/DeepSeek-V3-0324'
         }
         try:
-            response = requests.post(AI_HF.HF_API_URL, headers=headers, json=payload, timeout=20)
+            response = requests.post(AI_HF.API_URL, headers=headers, json=payload, timeout=20)
 
             data = response.json()
             if 'choices' in data and len(data['choices']) > 0:

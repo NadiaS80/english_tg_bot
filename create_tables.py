@@ -2,7 +2,7 @@ import sqlalchemy as sq
 from sqlalchemy.orm import sessionmaker, declarative_base, relationship
 from config import DB_DSN
 
-engine = sq.create_engine(DSN)
+engine = sq.create_engine(DB_DSN)
 Session = sessionmaker(bind=engine)
 session = Session()
 
@@ -49,7 +49,19 @@ class UserWord(Base):
     user = relationship('User', backref='user_words')
 
 def create_tables(engine):
+    """Create all database tables using SQLAlchemy metadata.
+
+    Args:
+        engine: SQLAlchemy engine bound to the target database.
+    """
     Base.metadata.create_all(engine) 
 
+
 def delete_tables(engine):
+    """Drop all database tables from the connected database.
+
+    Args:
+        engine: SQLAlchemy engine bound to the target database.
+    """
+
     Base.metadata.drop_all(engine)

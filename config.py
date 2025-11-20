@@ -1,5 +1,3 @@
-# config.py
-
 login = 'YOUR-LOGIN'
 password = 'YOUR-PASSWORD'
 host = 'YOUR-HOST'
