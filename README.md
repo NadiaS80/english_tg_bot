@@ -136,9 +136,9 @@ python seed_data_tables.py
 
 6. Run Telegram bot:
 
-``bash
+```bash
 python run_cod.py
-``
+```
 
 ---
 
