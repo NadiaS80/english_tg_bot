@@ -1,14 +1,17 @@
 import random
 import telebot
 from telebot import types
+from decorator.logger import logger
 
-from config import TG_BOT_TOKEN
+from myconfig import TG_BOT_TOKEN
 from create_tables import Session, User, Level, CommonWord, UserWord
 from ai_hf import AI_HF
 
 bot = telebot.TeleBot(TG_BOT_TOKEN)
 
+
 @bot.message_handler(commands=['start'])
+@logger(r'decorator/logs/log_start.log')
 def welcome(message):
     """Handle /start command and initialize user profile and level selection."""
     session = Session()
@@ -110,7 +113,7 @@ def learn_words_re(message):
     menu.add(*words_buttoms)
     menu.add(buttom_show_translate)
     menu.add(buttom_main_menu)
-    user_msg = bot.send_message(message.chat.id, f'Слово: {first_word['rus']}\nВыбери перевод', reply_markup=menu)
+    user_msg = bot.send_message(message.chat.id, f'Слово: {first_word["rus"]}\nВыбери перевод', reply_markup=menu)
     bot.register_next_step_handler(user_msg, LearnWords.right_or_not_re, first_word['rus'], first_word['eng'], first_word['exmp'])
     session.commit()
     session.close()
@@ -154,7 +157,7 @@ def learn_words_er(message):
     menu.add(*words_buttoms)
     menu.add(buttom_show_translate)
     menu.add(buttom_main_menu)
-    user_msg = bot.send_message(message.chat.id, f'Слово: {first_word['eng']}\nВыбери перевод', reply_markup=menu)
+    user_msg = bot.send_message(message.chat.id, f'Слово: {first_word["eng"]}\nВыбери перевод', reply_markup=menu)
     bot.register_next_step_handler(user_msg, LearnWords.right_or_not_er, first_word['eng'], first_word['rus'], first_word['exmp'])
     session.commit()
     session.close()

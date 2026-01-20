@@ -1,6 +1,6 @@
 import sqlalchemy as sq
 from sqlalchemy.orm import sessionmaker, declarative_base, relationship
-from config import DB_DSN
+from myconfig import DB_DSN
 
 engine = sq.create_engine(DB_DSN)
 Session = sessionmaker(bind=engine)

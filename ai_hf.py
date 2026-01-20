@@ -1,5 +1,5 @@
 import requests
-from config import HF_API_URL, HUGGING_FACE_TOKEN
+from myconfig import HF_API_URL, HUGGING_FACE_TOKEN
 
 class AI_HF:
 
